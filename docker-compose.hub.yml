@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+ 
+  backend:
+    image: giabaotran/mern-backend:1.0    
+    ports:
+      - "5000:5000"                       
+    environment:
+      - MONGODB_URI=mongodb+srv://GiaBao:1234%40qwer@cluster0.w0bbevh.mongodb.net/cloud_lab?retryWrites=true&w=majority
+      - PORT=5000
+
+
+  frontend:
+    image: giabaotran/mern-frontend:2.0   
+    ports:
+      - "3000:3000"                     

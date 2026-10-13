@@ -8,20 +8,55 @@ const Student = require('./models/Student');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://localhost:3000'
+].filter(Boolean);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      process.env.NODE_ENV !== 'production'
+    ) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Origin not allowed by CORS'));
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Kết nối MongoDB Atlas thành công!'))
-  .catch((err) => console.error('Lỗi kết nối MongoDB Atlas:', err));
+// mongoose.connect(process.env.MONGODB_URI)
+//   .then(() => console.log('Kết nối MongoDB Atlas thành công!'))
+//   .catch((err) => console.error('Lỗi kết nối MongoDB Atlas:', err));
 
-app.listen(PORT, () => {
-  console.log(`Server đang chạy tại http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server đang chạy tại http://localhost:${PORT}`);
+// });
 
-app.get('/', (req, res) => {
-  res.send('Backend đang hoạt động!');
-});
+// app.get('/', (req, res) => {
+//   res.send('Backend đang hoạt động!');
+// });
+async function startServer() {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('Kết nối MongoDB Atlas thành công!');
+
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server đang chạy trên port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Lỗi khởi động Backend:', error);
+    process.exit(1);
+  }
+}
+
+startServer();
 
 app.get('/api/students', async (req, res) => {
   try {

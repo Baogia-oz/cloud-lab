@@ -9,18 +9,12 @@ function App() {
     name: '',
     email: ''
   })
-  // Thêm state để quản lý trạng thái đang sửa sinh viên nào
+  
   const [editingId, setEditingId] = useState(null)
 
-  const getApiUrl = () => {
-    const origin = window.location.origin;
-    if (origin.includes('github.dev') || origin.includes('app.github.dev')) {
-      return origin.replace('-5173', '-5000') + '/api/students';
-    }
-    return 'http://localhost:5000/api/students';
-  };
 
-  const API_URL = getApiUrl();
+const API_URL = `${import.meta.env.VITE_API_URL}/api/students`;
+
 
   const fetchStudents = async () => {
     try {

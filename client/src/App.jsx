@@ -13,7 +13,8 @@ function App() {
   const [editingId, setEditingId] = useState(null)
 
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api/students`;
+
+const API_URL = "/api/students";
 
 
   const fetchStudents = async () => {
@@ -91,6 +92,19 @@ const API_URL = `${import.meta.env.VITE_API_URL}/api/students`;
   return (
     <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto', color: '#000' }}>
       <h2>Quản lý Sinh viên</h2>
+
+        <div
+          style={{
+            marginBottom: '20px',
+            padding: '10px',
+            backgroundColor: '#e8f5e9',
+            color: '#2e7d32',
+            borderRadius: '6px',
+            fontWeight: 'bold'
+      }}
+    >
+          Phiên bản ứng dụng: v2.0
+      </div>
 
       <form onSubmit={handleSubmit} style={{ marginBottom: '30px', padding: '15px', border: '1px solid #ccc', borderRadius: '8px', backgroundColor: '#f9f9f9' }}>
         <div style={{ marginBottom: '10px' }}>
